@@ -1,7 +1,8 @@
 [
     {
         "name": "Basketball",
-        "md5": "e494c4f44897d94e0541f7036a302449.svg",
+        "md5": "e494c4f44897d94e0541f7036a302449",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -12,7 +13,8 @@
     },
     {
         "name": "Blue Sky",
-        "md5": "e7c147730f19d284bcd7b3f00af19bb6.svg",
+        "md5": "e7c147730f19d284bcd7b3f00af19bb6",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -23,7 +25,8 @@
     },
     {
         "name": "Blue Sky 2",
-        "md5": "ba427e8c539997f6b7a598f2a78306ca.svg",
+        "md5": "ba427e8c539997f6b7a598f2a78306ca",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -34,7 +37,8 @@
     },
     {
         "name": "Blue Sky3",
-        "md5": "5a0159578408d7da9bac6d2379cabfe1.svg",
+        "md5": "5a0159578408d7da9bac6d2379cabfe1",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -45,7 +49,8 @@
     },
     {
         "name": "Circles",
-        "md5": "4e29033ec2b891a8f1ca21242811d403.svg",
+        "md5": "4e29033ec2b891a8f1ca21242811d403",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -56,7 +61,8 @@
     },
     {
         "name": "Hearts1",
-        "md5": "4bfd6a761ff985e342acbf2e07f63526.svg",
+        "md5": "4bfd6a761ff985e342acbf2e07f63526",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -67,7 +73,8 @@
     },
     {
         "name": "Hearts2",
-        "md5": "b6602e32d55ed75eaea1b646f61b6c17.svg",
+        "md5": "b6602e32d55ed75eaea1b646f61b6c17",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -78,7 +85,8 @@
     },
     {
         "name": "Jurassic",
-        "md5": "73fd0531a1aaca5dff2d1c67202ff5bd.svg",
+        "md5": "73fd0531a1aaca5dff2d1c67202ff5bd",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -89,7 +97,8 @@
     },
     {
         "name": "Light",
-        "md5": "4b98c07876ed8997c3762e75790507b4.svg",
+        "md5": "4b98c07876ed8997c3762e75790507b4",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -100,7 +109,8 @@
     },
     {
         "name": "Party",
-        "md5": "108160d0e44d1c340182e31c9dc0758a.svg",
+        "md5": "108160d0e44d1c340182e31c9dc0758a",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -111,7 +121,8 @@
     },
     {
         "name": "Purple",
-        "md5": "b16a7870ab4287f0f46816b3c5061c9f.svg",
+        "md5": "b16a7870ab4287f0f46816b3c5061c9f",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -122,7 +133,8 @@
     },
     {
         "name": "Rays",
-        "md5": "87e963282db9e020e8c4d075891ea12b.svg",
+        "md5": "87e963282db9e020e8c4d075891ea12b",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -133,7 +145,8 @@
     },
     {
         "name": "Refrigerator",
-        "md5": "98f053f9681e872f34fafd783ce72205.svg",
+        "md5": "98f053f9681e872f34fafd783ce72205",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -144,7 +157,8 @@
     },
     {
         "name": "Space",
-        "md5": "b579aeeb143e79c47e2e65cbd3c0fe36.svg",
+        "md5": "b579aeeb143e79c47e2e65cbd3c0fe36",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -155,7 +169,8 @@
     },
     {
         "name": "Spotlight-stage2",
-        "md5": "12288218b23a264c84bd3c22bd03e90a.svg",
+        "md5": "12288218b23a264c84bd3c22bd03e90a",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -166,7 +181,8 @@
     },
     {
         "name": "Stripes",
-        "md5": "a6a21f5c08d586e8daaebde37c97fb6f.svg",
+        "md5": "a6a21f5c08d586e8daaebde37c97fb6f",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -177,7 +193,8 @@
     },
     {
         "name": "Winter",
-        "md5": "5fa9385a60b904672d0e46e9d768bb32.svg",
+        "md5": "5fa9385a60b904672d0e46e9d768bb32",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [
@@ -188,7 +205,8 @@
     },
     {
         "name": "Winter-lights",
-        "md5": "381f471693238611a1b54da4e771637a.svg",
+        "md5": "381f471693238611a1b54da4e771637a",
+        "dataFormat": "svg",
         "type": "backdrop",
         "tags": [],
         "info": [

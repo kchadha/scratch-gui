@@ -62,8 +62,10 @@ class LibraryComponent extends React.Component {
             >
                 <div className={styles.libraryScrollGrid}>
                     {this.getFilteredData().map((dataItem, index) => {
-                        const scratchURL = dataItem.md5 ?
-                            `https://cdn.assets.scratch.mit.edu/internalapi/asset/${dataItem.md5}/get/` :
+                        // TODO a property titled 'md5' should refer to an md5
+                        // and not {md5}.{fileExt} -- this can lead to confusion and bugs
+                        const scratchURL = dataItem.md5 && dataItem.dataFormat ?
+                            `https://cdn.assets.scratch.mit.edu/internalapi/asset/${dataItem.md5}.${dataItem.dataFormat}/get/` :
                             dataItem.rawURL;
                         return (
                             <LibraryItem

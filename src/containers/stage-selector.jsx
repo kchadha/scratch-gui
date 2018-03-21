@@ -22,14 +22,25 @@ class StageSelector extends React.Component {
         ]);
     }
     addBackdropFromLibraryItem (item) {
+        // // TODO fix library so that there is an md5 and a dataFormat, or
+        // // just have storage give us the md5
+        // const idPartsMatches = item.md5.match(/^[a-fA-f0-9]{32}.[a-zA-Z]{3}$/);
+        // if (!idPartsMatches || idPartsMatches.length < 3) {
+        //     log.error('Library item does not have correct md5 property');
+        //     return null;
+        // }
+        // const md5 = idPartsMatches[1];
+        // const ext = idPartsMatches[2];
         const vmBackdrop = {
             name: item.name,
             rotationCenterX: item.info[0] && item.info[0] / 2,
             rotationCenterY: item.info[1] && item.info[1] / 2,
             bitmapResolution: item.info.length > 2 ? item.info[2] : 1,
-            skinId: null
+            skinId: null,
+            md5: item.md5,
+            dataFormat: item.dataFormat
         };
-        return this.props.vm.addBackdrop(item.md5, vmBackdrop);
+        return this.props.vm.addBackdrop(/* item.md5,*/ vmBackdrop);
     }
     handleClick (e) {
         e.preventDefault();

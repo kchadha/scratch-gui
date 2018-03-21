@@ -16,14 +16,18 @@ class CostumeLibrary extends React.PureComponent {
         ]);
     }
     handleItemSelected (item) {
+        // TODO fix library so that there is an md5 and a dataFormat, or
+        // just have storage give us the md5
         const vmCostume = {
             name: item.name,
             rotationCenterX: item.info[0],
             rotationCenterY: item.info[1],
             bitmapResolution: item.info.length > 2 ? item.info[2] : 1,
-            skinId: null
+            skinId: null,
+            md5: item.md5,
+            dataFormat: item.dataFormat
         };
-        this.props.vm.addCostume(item.md5, vmCostume).then(() => {
+        this.props.vm.addCostume(/* item.md5,*/ vmCostume).then(() => {
             this.props.onNewCostume();
         });
         analytics.event({

@@ -28,6 +28,7 @@ class SoundLibrary extends React.PureComponent {
         this.player.stopAllSounds();
     }
     handleItemMouseEnter (soundItem) {
+        debugger;
         const md5ext = soundItem._md5;
         const idParts = md5ext.split('.');
         const md5 = idParts[0];

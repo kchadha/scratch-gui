@@ -130,10 +130,12 @@ class CostumeTab extends React.Component {
             rotationCenterX: emptyItem.info[0],
             rotationCenterY: emptyItem.info[1],
             bitmapResolution: emptyItem.info.length > 2 ? emptyItem.info[2] : 1,
-            skinId: null
+            skinId: null,
+            md5: emptyItem.md5,
+            dataFormat: emptyItem.dataFormat
         };
 
-        this.props.vm.addCostume(emptyItem.md5, vmCostume).then(() => {
+        this.props.vm.addCostume(/* emptyItem.md5,*/ vmCostume).then(() => {
             this.handleNewCostume();
         });
     }
@@ -144,9 +146,11 @@ class CostumeTab extends React.Component {
             rotationCenterX: item.info[0],
             rotationCenterY: item.info[1],
             bitmapResolution: item.info.length > 2 ? item.info[2] : 1,
-            skinId: null
+            skinId: null,
+            md5: item.md5,
+            dataFormat: item.dataFormat
         };
-        this.props.vm.addCostume(item.md5, vmCostume).then(() => {
+        this.props.vm.addCostume(/* item.md5, */ vmCostume).then(() => {
             this.handleNewCostume();
         });
     }
@@ -157,9 +161,11 @@ class CostumeTab extends React.Component {
             rotationCenterX: item.info[0] && item.info[0] / 2,
             rotationCenterY: item.info[1] && item.info[1] / 2,
             bitmapResolution: item.info.length > 2 ? item.info[2] : 1,
-            skinId: null
+            skinId: null,
+            md5: item.md5,
+            dataFormat: item.dataFormat
         };
-        this.props.vm.addCostume(item.md5, vmCostume).then(() => {
+        this.props.vm.addCostume(/* item.md5,*/ vmCostume).then(() => {
             this.handleNewCostume();
         });
     }
