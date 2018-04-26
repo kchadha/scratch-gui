@@ -4,6 +4,7 @@ const OPEN_MODAL = 'scratch-gui/modals/OPEN_MODAL';
 const CLOSE_MODAL = 'scratch-gui/modals/CLOSE_MODAL';
 
 const MODAL_BACKDROP_LIBRARY = 'backdropLibrary';
+const MODAL_CAMERA_CAPTURE = 'cameraCapture';
 const MODAL_COSTUME_LIBRARY = 'costumeLibrary';
 const MODAL_EXTENSION_LIBRARY = 'extensionLibrary';
 const MODAL_LOADING_PROJECT = 'loadingProject';
@@ -15,6 +16,7 @@ const MODAL_SOUND_RECORDER = 'soundRecorder';
 
 const initialState = {
     [MODAL_BACKDROP_LIBRARY]: false,
+    [MODAL_CAMERA_CAPTURE]: false,
     [MODAL_COSTUME_LIBRARY]: false,
     [MODAL_EXTENSION_LIBRARY]: false,
     [MODAL_LOADING_PROJECT]: false,
@@ -55,6 +57,10 @@ const openBackdropLibrary = function () {
     analytics.pageview('/libraries/backdrops');
     return openModal(MODAL_BACKDROP_LIBRARY);
 };
+const openCameraCapture = function () {
+    analytics.pageview('/modals/camera');
+    return openModal(MODAL_CAMERA_CAPTURE);
+};
 const openCostumeLibrary = function () {
     analytics.pageview('/libraries/costumes');
     return openModal(MODAL_COSTUME_LIBRARY);
@@ -86,6 +92,9 @@ const openSoundRecorder = function () {
 const closeBackdropLibrary = function () {
     return closeModal(MODAL_BACKDROP_LIBRARY);
 };
+const closeCameraCapture = function () {
+    return closeModal(MODAL_CAMERA_CAPTURE);
+};
 const closeCostumeLibrary = function () {
     return closeModal(MODAL_COSTUME_LIBRARY);
 };
@@ -110,6 +119,7 @@ const closeSoundRecorder = function () {
 export {
     reducer as default,
     openBackdropLibrary,
+    openCameraCapture,
     openCostumeLibrary,
     openExtensionLibrary,
     openLoadingProject,
@@ -118,6 +128,7 @@ export {
     openSpriteLibrary,
     openSoundRecorder,
     closeBackdropLibrary,
+    closeCameraCapture,
     closeCostumeLibrary,
     closeExtensionLibrary,
     closeLoadingProject,
