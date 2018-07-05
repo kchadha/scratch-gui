@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "scratch-vm": "github:kchadha/scratch-vm#variable-scope",
-    "scratch-blocks": "github:kchadha/scratch-blocks#local-vars"
+    "scratch-blocks": "github:kchadha/scratch-blocks#local-vars-travis"
   },
   "devDependencies": {
     "arraybuffer-loader": "^1.0.3",
