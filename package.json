@@ -29,7 +29,7 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
-    "scratch-vm": "github:kchadha/scratch-vm#variable-scope",
+    "scratch-vm": "github:kchadha/scratch-vm#variable-scope-travis",
     "scratch-blocks": "github:kchadha/scratch-blocks#local-vars-travis"
   },
   "devDependencies": {
