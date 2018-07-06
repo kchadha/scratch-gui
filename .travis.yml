@@ -16,6 +16,7 @@ cache:
 install:
 - npm --production=false install
 - npm --production=false update
+- cd node_modules/scratch-vm && npm --production=false install && npm run build && cd -
 - cd node_modules/scratch-blocks && ln -s $(npm root)/google-closure-library ../closure-library --force && npm --production=false install && cd -
 script:
 - npm test
