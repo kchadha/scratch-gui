@@ -1,195 +1,153 @@
-webpackJsonp([1],{
+var GUI =
+(window["webpackJsonpGUI"] = window["webpackJsonpGUI"] || []).push([["player"],{
 
-/***/ 453:
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./src/playground/player.css":
+/*!******************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/postcss-loader/src??postcss!./src/playground/player.css ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(13);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _reactRedux = __webpack_require__(6);
-
-var _appStateHoc = __webpack_require__(27);
-
-var _appStateHoc2 = _interopRequireDefault(_appStateHoc);
-
-var _controls = __webpack_require__(32);
-
-var _controls2 = _interopRequireDefault(_controls);
-
-var _stage = __webpack_require__(51);
-
-var _stage2 = _interopRequireDefault(_stage);
-
-var _box = __webpack_require__(7);
-
-var _box2 = _interopRequireDefault(_box);
-
-var _gui = __webpack_require__(30);
-
-var _gui2 = _interopRequireDefault(_gui);
-
-var _projectLoaderHoc = __webpack_require__(33);
-
-var _projectLoaderHoc2 = _interopRequireDefault(_projectLoaderHoc);
-
-__webpack_require__(454);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var mapStateToProps = function mapStateToProps(state) {
-    return { vm: state.vm };
-};
-
-var VMStage = (0, _reactRedux.connect)(mapStateToProps)(_stage2.default);
-var VMControls = (0, _reactRedux.connect)(mapStateToProps)(_controls2.default);
-
-var Player = function (_React$Component) {
-    _inherits(Player, _React$Component);
-
-    function Player(props) {
-        _classCallCheck(this, Player);
-
-        var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, props));
-
-        _this.handleResize = _this.handleResize.bind(_this);
-        _this.state = _this.getWindowSize();
-        return _this;
-    }
-
-    _createClass(Player, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            window.addEventListener('resize', this.handleResize);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            window.removeEventListener('resize', this.handleResize);
-        }
-    }, {
-        key: 'getWindowSize',
-        value: function getWindowSize() {
-            return {
-                width: window.innerWidth,
-                height: window.innerHeight
-            };
-        }
-    }, {
-        key: 'handleResize',
-        value: function handleResize() {
-            this.setState(this.getWindowSize());
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var height = this.state.height - 40;
-            var width = height + height / 3;
-            if (width > this.state.width) {
-                width = this.state.width;
-                height = width * .75;
-            }
-            return _react2.default.createElement(
-                _gui2.default,
-                _extends({}, this.props, {
-                    style: {
-                        margin: '0 auto'
-                    },
-                    width: width
-                }),
-                _react2.default.createElement(
-                    _box2.default,
-                    { height: 40 },
-                    _react2.default.createElement(VMControls, {
-                        style: {
-                            marginRight: 10,
-                            height: 40
-                        }
-                    })
-                ),
-                _react2.default.createElement(VMStage, {
-                    height: height,
-                    width: width
-                })
-            );
-        }
-    }]);
-
-    return Player;
-}(_react2.default.Component);
-
-var App = (0, _appStateHoc2.default)((0, _projectLoaderHoc2.default)(Player));
-
-var appTarget = document.createElement('div');
-document.body.appendChild(appTarget);
-
-_reactDom2.default.render(_react2.default.createElement(App, null), appTarget);
-
-/***/ }),
-
-/***/ 454:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(455);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(3)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js??ref--1-1!../../node_modules/postcss-loader/lib/index.js??postcss!./player.css", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js??ref--1-1!../../node_modules/postcss-loader/lib/index.js??postcss!./player.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 455:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, "body {\n    padding: 0;\n    margin: 0;\n}\n", ""]);
+exports.push([module.i, ".player_stage-only_3WHZN {\n    width: calc(480px + 1rem);\n}\n\n.player_stage-only_3WHZN * {\n    -webkit-box-sizing: border-box;\n            box-sizing: border-box;\n}\n", ""]);
 
 // exports
+exports.locals = {
+	"stage-only": "player_stage-only_3WHZN",
+	"stageOnly": "player_stage-only_3WHZN"
+};
 
+/***/ }),
+
+/***/ "./src/playground/player.css":
+/*!***********************************!*\
+  !*** ./src/playground/player.css ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../node_modules/css-loader??ref--5-1!../../node_modules/postcss-loader/src??postcss!./player.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./src/playground/player.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./src/playground/player.jsx":
+/*!***********************************!*\
+  !*** ./src/playground/player.jsx ***!
+  \***********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/index.js");
+/* harmony import */ var _components_box_box_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/box/box.jsx */ "./src/components/box/box.jsx");
+/* harmony import */ var _containers_gui_jsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../containers/gui.jsx */ "./src/containers/gui.jsx");
+/* harmony import */ var _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../lib/hash-parser-hoc.jsx */ "./src/lib/hash-parser-hoc.jsx");
+/* harmony import */ var _lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../lib/app-state-hoc.jsx */ "./src/lib/app-state-hoc.jsx");
+/* harmony import */ var _lib_titled_hoc_jsx__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../lib/titled-hoc.jsx */ "./src/lib/titled-hoc.jsx");
+/* harmony import */ var _reducers_mode__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../reducers/mode */ "./src/reducers/mode.js");
+/* harmony import */ var _player_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./player.css */ "./src/playground/player.css");
+/* harmony import */ var _player_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_player_css__WEBPACK_IMPORTED_MODULE_12__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (false) {}
+
+
+
+var Player = function Player(_ref) {
+  var isPlayerOnly = _ref.isPlayerOnly,
+      onSeeInside = _ref.onSeeInside,
+      projectId = _ref.projectId;
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_box_box_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(_defineProperty({}, _player_css__WEBPACK_IMPORTED_MODULE_12___default.a.stageOnly, isPlayerOnly))
+  }, isPlayerOnly && react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", {
+    onClick: onSeeInside
+  }, 'See inside'), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_containers_gui_jsx__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    enableCommunity: true,
+    isPlayerOnly: isPlayerOnly,
+    projectId: projectId
+  }));
+};
+
+Player.propTypes = {
+  isPlayerOnly: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+  onSeeInside: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func,
+  projectId: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    isPlayerOnly: state.scratchGui.mode.isPlayerOnly
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onSeeInside: function onSeeInside() {
+      return dispatch(Object(_reducers_mode__WEBPACK_IMPORTED_MODULE_11__["setPlayer"])(false));
+    }
+  };
+};
+
+var ConnectedPlayer = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(mapStateToProps, mapDispatchToProps)(Player); // note that redux's 'compose' function is just being used as a general utility to make
+// the hierarchy of HOC constructor calls clearer here; it has nothing to do with redux's
+// ability to compose reducers.
+
+var WrappedPlayer = Object(redux__WEBPACK_IMPORTED_MODULE_5__["compose"])(_lib_app_state_hoc_jsx__WEBPACK_IMPORTED_MODULE_9__["default"], _lib_hash_parser_hoc_jsx__WEBPACK_IMPORTED_MODULE_8__["default"], _lib_titled_hoc_jsx__WEBPACK_IMPORTED_MODULE_10__["default"])(ConnectedPlayer);
+var appTarget = document.createElement('div');
+document.body.appendChild(appTarget);
+react_dom__WEBPACK_IMPORTED_MODULE_3___default.a.render(react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(WrappedPlayer, {
+  isPlayerOnly: true
+}), appTarget);
 
 /***/ })
 
-},[453]);
+},[["./src/playground/player.jsx","lib.min"]]]);
 //# sourceMappingURL=player.js.map
