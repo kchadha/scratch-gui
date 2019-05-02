@@ -68,6 +68,46 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
         if (staticBlockInfo.blockIconURI || categoryInfo.blockIconURI) {
             blockJson.extensions = ['scratch_extension'];
         }
+
+        // Handle custom context menu options
+        // TODO this should probably not live here in the future, or at least
+        // we need some way of registering a context menu option only once for
+        // each block (see try catch below)
+        if (staticBlockInfo.info.customContextMenu) {
+            const customContextMenuForBlock = {
+                customContextMenu: function (options) {
+                    staticBlockInfo.info.customContextMenu.forEach(contextOption => {
+                        options.push({
+                            enabled: true,
+                            text: contextOption.name,
+                            callback: () => {
+                                if (contextOption.builtInCallback) {
+                                    switch (contextOption.builtInCallback) {
+                                    case 'EDIT_A_PROCEDURE':
+                                        // TODO FILL THIS IN
+                                        break;
+                                    case 'RENAME_A_VARIABLE':
+                                        // TODO FILL THIS IN
+                                        break;
+                                    }
+                                } else if (contextOption.callback) {
+                                    contextOption.callback();
+                                }
+                            }
+                        });
+                    });
+                }
+            };
+            const contextMenuName = `${blockJson.type}_context_menu`;
+            try {
+                ScratchBlocks.Extensions.registerMixin(contextMenuName, customContextMenuForBlock);
+            } catch (e) {
+                log.warn("Context menu callback was already registered, but we're going to ignore this for now");
+            }
+            blockJson.extensions = blockJson.extensions || [];
+            blockJson.extensions.push(contextMenuName);
+        }
+
         this.jsonInit(blockJson);
         this.blockInfoText = '{}';
         this.needsBlockInfoUpdate = true;
