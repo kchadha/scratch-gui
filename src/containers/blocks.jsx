@@ -93,6 +93,11 @@ class Blocks extends React.Component {
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
+        // TODO Figure out how to fix this:
+        // Removing square brackets temporarily so that they don't show up in extension block text
+        this.ScratchBlocks.utils.genUid.soup_ = '!#$%()*+,-./:;=?@^_`{|}~' +
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const toolboxXML = UNINITIALIZED_TOOLBOX_XML;

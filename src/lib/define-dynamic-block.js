@@ -48,9 +48,19 @@ const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlock
                             callback: () => {
                                 if (contextOption.builtInCallback) {
                                     switch (contextOption.builtInCallback) {
-                                    case 'EDIT_A_PROCEDURE':
-                                        // TODO FILL THIS IN
+                                    case 'EDIT_A_PROCEDURE': {
+                                        const oldProccode = this.procCode_;
+                                        const oldMutation = this.mutationToDom();
+                                        guiContext.props.onActivateCustomProcedures(
+                                            oldMutation, (mutation => {
+                                                contextOption.callback({oldProccode, mutation});
+                                                if (mutation.proccode !== this.procCode_) {
+                                                    ScratchBlocks.Events.fire(new ScratchBlocks.Events.BlockChange(this,
+                                                        'mutation', null, ScratchBlocks.Xml.domToText(oldMutation), ScratchBlocks.Xml.domToText(mutation)));
+                                                }
+                                            }));
                                         break;
+                                    }
                                     case 'RENAME_A_VARIABLE':
                                         // TODO FILL THIS IN
                                         break;
@@ -76,10 +86,27 @@ const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlock
         this.jsonInit(blockJson);
         this.blockInfoText = '{}';
         this.needsBlockInfoUpdate = true;
+        // TODO Needed for custom procs, figure out how to separate this specific
+        // info from this function. Or maybe this will get removed when proc definitions
+        // are extensionified.
+        this.procCode_ = null;
     },
     mutationToDom: function () {
         const container = document.createElement('mutation');
         container.setAttribute('blockInfo', this.blockInfoText);
+
+        // TODO this is temporary custom procedure glue code
+        if (this.procCode_) {
+            container.setAttribute('proccode', this.procCode_);
+            // container.setAttribute('argumentids', `["aifjefoejf${uid}", "eatsrjdyfugi${++uid}"]`);
+            // container.setAttribute('argumentnames', '["number or text", "boolean"]');
+            // container.setAttribute('argumentdefaults', '["", "false"]');
+            container.setAttribute('argumentids', JSON.stringify(this.argumentIds_));
+            container.setAttribute('argumentnames', JSON.stringify(this.argumentNames_));
+            container.setAttribute('argumentdefaults', JSON.stringify(this.argumentDefaults_));
+            container.setAttribute('warp', 'false');
+        }
+
         return container;
     },
     domToMutation: function (xmlElement) {
@@ -91,6 +118,15 @@ const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlock
         delete this.needsBlockInfoUpdate;
         this.blockInfoText = blockInfoText;
         const blockInfo = JSON.parse(blockInfoText);
+
+        // TODO this is temporary custom procedure glue code
+        if (blockInfo.proccode) {
+            this.procCode_ = blockInfo.proccode;
+            this.argumentIds_ = blockInfo.argumentIds;
+            this.argumentDefaults_ = blockInfo.argumentDefaults;
+            this.argumentNames_ = blockInfo.argumentNames;
+            this.generateShadows_ = blockInfo.generateShadows;
+        }
 
         switch (blockInfo.blockType) {
         case BlockType.COMMAND:
@@ -135,8 +171,27 @@ const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlock
             }
             return `%${++argCount}`;
         });
-        this.interpolate_(scratchBlocksStyleText, args);
-    }
+
+        if (this.secondInit) {
+            this.updateDisplay_();
+        } else {
+            this.interpolate_(scratchBlocksStyleText, args);
+        }
+        // this.interpolate_(scratchBlocksStyleText, args);
+    },
+    getProcCode: ScratchBlocks.ScratchBlocks.ProcedureUtils.getProcCode,
+    removeAllInputs_: ScratchBlocks.ScratchBlocks.ProcedureUtils.removeAllInputs_,
+    disconnectOldBlocks_: ScratchBlocks.ScratchBlocks.ProcedureUtils.disconnectOldBlocks_,
+    deleteShadows_: ScratchBlocks.ScratchBlocks.ProcedureUtils.deleteShadows_,
+    createAllInputs_: ScratchBlocks.ScratchBlocks.ProcedureUtils.createAllInputs_,
+    updateDisplay_: ScratchBlocks.ScratchBlocks.ProcedureUtils.updateDisplay_,
+
+    populateArgument_: ScratchBlocks.ScratchBlocks.ProcedureUtils.populateArgumentOnCaller_,
+    addProcedureLabel_: ScratchBlocks.ScratchBlocks.ProcedureUtils.addLabelField_,
+
+    // Only exists on the external caller.
+    attachShadow_: ScratchBlocks.ScratchBlocks.ProcedureUtils.attachShadow_,
+    buildShadowDom_: ScratchBlocks.ScratchBlocks.ProcedureUtils.buildShadowDom_
 });
 
 export {
