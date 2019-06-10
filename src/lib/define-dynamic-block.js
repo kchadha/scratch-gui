@@ -16,7 +16,7 @@ const updateBlockOnWorkspace = (ScratchBlocks, workspace, blockId, blockInfo) =>
 };
 
 // TODO: grow this until it can fully replace `_convertForScratchBlocks` in the VM runtime
-const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extendedOpcode) => ({
+const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlockInfo, extendedOpcode) => ({
     init: function () {
         const blockJson = {
             type: extendedOpcode,
