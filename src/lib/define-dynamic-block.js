@@ -4,6 +4,17 @@ import ArgumentType from 'scratch-vm/src/extension-support/argument-type';
 import BlockType from 'scratch-vm/src/extension-support/block-type';
 import log from './log.js';
 
+const updateBlockOnWorkspace = (ScratchBlocks, workspace, blockId, blockInfo) => {
+    const block = workspace.getBlockById(blockId);
+    // TODO this seems hacky but is needed for how defineDynamicBlock currently works.
+    block.needsBlockInfoUpdate = true;
+    block.secondInit = true;
+    // TODO do we need to use xml-escape here?
+    block.blockInfoText = JSON.stringify(blockInfo);
+    const mutation = block.mutationToDom();
+    block.domToMutation(mutation);
+};
+
 // TODO: grow this until it can fully replace `_convertForScratchBlocks` in the VM runtime
 const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extendedOpcode) => ({
     init: function () {
@@ -128,4 +139,7 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
     }
 });
 
-export default defineDynamicBlock;
+export {
+    defineDynamicBlock as default,
+    updateBlockOnWorkspace
+};

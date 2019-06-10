@@ -17,7 +17,7 @@ import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import {STAGE_DISPLAY_SIZES} from '../lib/layout-constants';
 import DropAreaHOC from '../lib/drop-area-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
-import defineDynamicBlock from '../lib/define-dynamic-block';
+import defineDynamicBlock, {updateBlockOnWorkspace} from '../lib/define-dynamic-block';
 
 import {connect} from 'react-redux';
 import {updateToolbox} from '../reducers/toolbox';
@@ -137,6 +137,9 @@ class Blocks extends React.Component {
         addFunctionListener(this.workspace, 'zoom', this.onWorkspaceMetricsChange);
 
         this.attachVM();
+
+        this.props.vm.attachBlockUpdater(updateBlockOnWorkspace.bind(null, this.ScratchBlocks, this.workspace));
+
         // Only update blocks/vm locale when visible to avoid sizing issues
         // If locale changes while not visible it will get handled in didUpdate
         if (this.props.isVisible) {
