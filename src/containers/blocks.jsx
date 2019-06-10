@@ -49,9 +49,22 @@ const DroppableBlocks = DropAreaHOC([
     DragConstants.BACKPACK_CODE
 ])(BlocksComponent);
 
+const updateBlockOnCurrentWorkspace = (ScratchBlocks, workspace, blockId, blockInfo) => {
+    const block = workspace.getBlockById(blockId);
+    block.needsBlockInfoUpdate = true; // TODO FIGURE OUT WHERE THIS SHOULD GO
+    block.secondInit = true;
+    block.blockInfoText = JSON.stringify(blockInfo); // TODO xml escape
+    const mutation = block.mutationToDom();
+    block.domToMutation(mutation);
+    // block.render();
+    // ScratchBlocks.Xml.domToBlock(ScratchBlocks.Xml.blockToDomWithXY(block), workspace);
+
+
+};
+
 // TODO: grow this until it can fully replace `_convertForScratchBlocks` in the VM runtime
 // :( where should this live?
-const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extendedOpcode) => ({
+const defineDynamicBlock = (guiContext, ScratchBlocks, categoryInfo, staticBlockInfo, extendedOpcode) => ({
     init: function () {
         const blockJson = {
             type: extendedOpcode,
@@ -83,9 +96,21 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
                             callback: () => {
                                 if (contextOption.builtInCallback) {
                                     switch (contextOption.builtInCallback) {
-                                    case 'EDIT_A_PROCEDURE':
+                                    case 'EDIT_A_PROCEDURE': {
                                         // TODO FILL THIS IN
+                                        const oldProccode = this.procCode_;
+                                        const oldMutation = this.mutationToDom();
+                                        guiContext.props.onActivateCustomProcedures(
+                                            oldMutation, (mutation => {
+                                                contextOption.callback({oldProccode, mutation});
+                                                if (mutation.proccode !== this.procCode_) {
+                                                    debugger;
+                                                    ScratchBlocks.Events.fire(new ScratchBlocks.Events.BlockChange(this,
+                                                        'mutation', null, ScratchBlocks.Xml.domToText(oldMutation), ScratchBlocks.Xml.domToText(mutation)));
+                                                }
+                                            }));
                                         break;
+                                    }
                                     case 'RENAME_A_VARIABLE':
                                         // TODO FILL THIS IN
                                         break;
@@ -111,13 +136,29 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
         this.jsonInit(blockJson);
         this.blockInfoText = '{}';
         this.needsBlockInfoUpdate = true;
+        this.procCode_ = null;
     },
     mutationToDom: function () {
         const container = document.createElement('mutation');
         container.setAttribute('blockInfo', this.blockInfoText);
+
+        // TODO this is temporary custom procedure glue code
+        if (this.procCode_) {
+            container.setAttribute('proccode', this.procCode_);
+            // container.setAttribute('argumentids', `["aifjefoejf${uid}", "eatsrjdyfugi${++uid}"]`);
+            // container.setAttribute('argumentnames', '["number or text", "boolean"]');
+            // container.setAttribute('argumentdefaults', '["", "false"]');
+            container.setAttribute('argumentids', JSON.stringify(this.argumentIds_));
+            container.setAttribute('argumentnames', JSON.stringify(this.argumentNames_));
+            container.setAttribute('argumentdefaults', JSON.stringify(this.argumentDefaults_));
+            container.setAttribute('warp', 'false');
+        }
+
         return container;
     },
     domToMutation: function (xmlElement) {
+        debugger;
+        // console.log('dom to mutation! ', xmlElement);
         const blockInfoText = xmlElement.getAttribute('blockInfo');
         if (!blockInfoText) return;
         if (!this.needsBlockInfoUpdate) {
@@ -126,6 +167,15 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
         delete this.needsBlockInfoUpdate;
         this.blockInfoText = blockInfoText;
         const blockInfo = JSON.parse(blockInfoText);
+
+        // TODO this is temporary custom procedure glue code
+        if (blockInfo.proccode) {
+            this.procCode_ = blockInfo.proccode;
+            this.argumentIds_ = blockInfo.argumentIds;
+            this.argumentDefaults_ = blockInfo.argumentDefaults;
+            this.argumentNames_ = blockInfo.argumentNames;
+            this.generateShadows_ = blockInfo.generateShadows;
+        }
 
         switch (blockInfo.blockType) {
         case BlockType.COMMAND:
@@ -156,6 +206,7 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
         // Layout block arguments
         // TODO handle E/C Blocks
         const blockText = blockInfo.text;
+        console.log("Block Text: ", blockInfo.text);
         const args = [];
         let argCount = 0;
         const scratchBlocksStyleText = blockText.replace(/\[(.+?)]/g, (match, argName) => {
@@ -170,8 +221,100 @@ const defineDynamicBlock = (ScratchBlocks, categoryInfo, staticBlockInfo, extend
             }
             return `%${++argCount}`;
         });
-        this.interpolate_(scratchBlocksStyleText, args);
-    }
+
+        // const disconnectOldBlocks_ = () => {
+        //     let connectionMap = {};
+        //     for (let i = 0, input; input = this.inputList[i]; i++) {
+        //         if (input.connection) {
+        //             const target = input.connection.targetBlock();
+        //             const saveInfo = {
+        //                 shadow: input.connection.getShadowDom(),
+        //                 block: target
+        //             };
+        //             connectionMap[input.name] = saveInfo;
+        //
+        //             // Remove the shadow DOM, then disconnect the block.  Otherwise a shadow
+        //             // block will respawn instantly, and we'd have to remove it when we remove
+        //             // the input.
+        //             input.connection.setShadowDom(null);
+        //             if (target) {
+        //                 input.connection.disconnect();
+        //             }
+        //         }
+        //     }
+        //     return connectionMap;
+        // };
+        //
+        // const deleteShadows_ = connectionMap => {
+        //     // Get rid of all of the old shadow blocks if they aren't connected.
+        //     if (connectionMap) {
+        //         for (let id in connectionMap) {
+        //             const saveInfo = connectionMap[id];
+        //             if (saveInfo) {
+        //                 const block = saveInfo['block'];
+        //                 if (block && block.isShadow()) {
+        //                     block.dispose();
+        //                     connectionMap[id] = null;
+        //                     // At this point we know which shadow DOMs are about to be orphaned in
+        //                     // the VM.  What do we do with that information?
+        //                 }
+        //             }
+        //         }
+        //     }
+        // };
+
+        // Clear all existing inputs so we're not appending onto an existing block
+        // const connectionMap = disconnectOldBlocks_();
+        //
+        // for (let i = 0, input; input = this.inputList[i]; i++) {
+        //     input.dispose()
+        //     // this.removeInput(input.name);
+        // }
+        // this.inputList = [];
+        //
+        // deleteShadows_(connectionMap);
+
+        // // this.render();
+        //
+        // this.initSvg();
+
+        // this.interpolate_(scratchBlocksStyleText, args);
+        // debugger;
+
+        //
+        // console.log("Text: ", scratchBlocksStyleText);
+        // console.log("Args: ", args);
+        //
+        if (this.secondInit) {
+            this.updateDisplay_();
+        } else {
+            this.interpolate_(scratchBlocksStyleText, args);
+        }
+
+        console.log("Input list", this.inputList);
+
+        // }
+
+        // this.interpolate_(scratchBlocksStyleText, args);
+
+
+
+        // this.initSvg();
+        // this.render();
+    },
+    getProcCode: ScratchBlocks.ScratchBlocks.ProcedureUtils.getProcCode,
+    removeAllInputs_: ScratchBlocks.ScratchBlocks.ProcedureUtils.removeAllInputs_,
+    disconnectOldBlocks_: ScratchBlocks.ScratchBlocks.ProcedureUtils.disconnectOldBlocks_,
+    deleteShadows_: ScratchBlocks.ScratchBlocks.ProcedureUtils.deleteShadows_,
+    createAllInputs_: ScratchBlocks.ScratchBlocks.ProcedureUtils.createAllInputs_,
+    updateDisplay_: ScratchBlocks.ScratchBlocks.ProcedureUtils.updateDisplay_,
+
+    populateArgument_: ScratchBlocks.ScratchBlocks.ProcedureUtils.populateArgumentOnCaller_,
+    addProcedureLabel_: ScratchBlocks.ScratchBlocks.ProcedureUtils.addLabelField_,
+
+    // Only exists on the external caller.
+    attachShadow_: ScratchBlocks.ScratchBlocks.ProcedureUtils.attachShadow_,
+    buildShadowDom_: ScratchBlocks.ScratchBlocks.ProcedureUtils.buildShadowDom_
 });
 
 class Blocks extends React.Component {
@@ -219,6 +362,8 @@ class Blocks extends React.Component {
     componentDidMount () {
         this.ScratchBlocks.FieldColourSlider.activateEyedropper_ = this.props.onActivateColorPicker;
         this.ScratchBlocks.Procedures.externalProcedureDefCallback = this.props.onActivateCustomProcedures;
+        this.ScratchBlocks.utils.genUid.soup_ = '!#$%()*+,-./:;=?@^_`{|}~' +
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; // Removing square brackets temporarily so that they don't show up in extension block text
         this.ScratchBlocks.ScratchMsgs.setLocale(this.props.locale);
 
         const toolboxXML = UNINITIALIZED_TOOLBOX_XML;
@@ -263,6 +408,7 @@ class Blocks extends React.Component {
         addFunctionListener(this.workspace, 'zoom', this.onWorkspaceMetricsChange);
 
         this.attachVM();
+        this.props.vm.attachBlockUpdater(updateBlockOnCurrentWorkspace.bind(null, this.ScratchBlocks, this.workspace));
         // Only update blocks/vm locale when visible to avoid sizing issues
         // If locale changes while not visible it will get handled in didUpdate
         if (this.props.isVisible) {
@@ -562,7 +708,7 @@ class Blocks extends React.Component {
                     // Anything else will be picked up from the XML attached to the block instance.
                     const extendedOpcode = `${categoryInfo.id}_${blockInfo.info.opcode}`;
                     const blockDefinition =
-                        defineDynamicBlock(this.ScratchBlocks, categoryInfo, blockInfo, extendedOpcode);
+                        defineDynamicBlock(this, this.ScratchBlocks, categoryInfo, blockInfo, extendedOpcode);
                     this.ScratchBlocks.Blocks[extendedOpcode] = blockDefinition;
                 });
             }
@@ -806,7 +952,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onActivateColorPicker: callback => dispatch(activateColorPicker(callback)),
-    onActivateCustomProcedures: (data, callback) => dispatch(activateCustomProcedures(data, callback)),
+    onActivateCustomProcedures: (data, callback) => {
+        return dispatch(activateCustomProcedures(data, callback))
+    },
     onOpenConnectionModal: id => {
         dispatch(setConnectionModalExtensionId(id));
         dispatch(openConnectionModal());
